@@ -24,9 +24,10 @@ function setup() {
 	background(0);
 	stroke(255);
 	
+	colorMode(HSB);
 	noFill();
 	
-	song = loadSound("http://127.0.0.1:8080//songs/Fireflies.mp3", loaded);
+	song = loadSound("http://127.0.0.1:8080//songs//Fireflies.mp3", loaded);
 	
 	fft = new p5.FFT(0.6, BINS);
 	w = width / BINS;
@@ -51,8 +52,6 @@ function loaded() {
 }
 
 function draw() {
-	//background(0);
-	
 	var currentTime = song.currentTime();
 	var spectrum = fft.analyze();
 	
@@ -89,7 +88,6 @@ function draw() {
 	var fillValue;
     
 	fillValue = average(backgrounds);
-	
 	
 	background(fillValue / 6, fillValue / 6, fillValue / 6);
 	fillValue = average(lowgrounds);
