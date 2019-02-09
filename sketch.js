@@ -15,23 +15,63 @@ var fft;
 const BINS = 256;
 
 // Represents the songs to be played
+// BATCH 1
 var songs = [
-/*
-	'Awitin Mo, Isasayaw Ko.mp3',
-	'Blue (Da Ba Dee).mp3',
-	'Cruel Angel_s Thesis.mp3',
-	'I Like Hotto Dogu.mp3',
-	'Katawan.mp3',
+	'NERV Theme.mp3',
+	'Eye Of The Tiger.mp3',
+	'Barbastella.mp3',
+	'Crying Soul.mp3',
+	'Don_t Stop Believing.mp3',
+	'Beat It.mp3',
 	'Komm süßer Tod.mp3',
-	'Legs.mp3',
-	'Lose Yourself - Eminem.mp3',
-	'Fireflies.mp3',
-	'Rock Baby Rock.mp3',
-	'Royals.mp3',
+	'Awitin Mo Isasayaw Ko.mp3',
+	'Heartbeat.mp3',
+	'Blue (Da Ba Dee).mp3',
+	'Lose Yourself.mp3',
+	'The Beast II.mp3',
+	'Wrecking Ball.mp3',
+	'Fix You.mp3',
+	'Sweet Victory.mp3',
+	'Pachelbel_s Canon.mp3',
+	'Beat of the Rising Sun.mp3',
+	'Believer.mp3',
 	'Sound of Silence.mp3',
-	'Tamashii no Refrain.mp3'
-*/
+	'Tamashii no Refrain.mp3',
+	'Mazinger Battle Theme.mp3',
+	'Another One Bites the Dust.mp3',
+	'Fireflies.mp3',
+	'Pokemon Theme.mp3',
+	'God and Man.mp3',
 ];
+
+// BATCH 2
+/*var songs = [
+	'Pokemon Battle.mp3',
+	'That Is How I Roll! - Instrumental.mp3',
+	'First Flight.mp3',
+	'Poseidon_s Wrath.mp3',
+	'Ikaw Ang Aking Mahal.mp3',
+	'Rowdy Rumble.mp3',
+	'My Songs Know What You Did in the Dark.mp3',
+	'Writings on the Wall.mp3',
+	'Ama Namin.mp3',
+	'Royals.mp3',
+	'Old Chateau.mp3',
+	'Cruel Angel_s Thesis.mp3',
+	'Rock Baby Rock.mp3',
+	'Fruitcake.mp3',
+	'Gundam IBO - Battle.mp3',
+	'Katawan.mp3',
+	'FGO Arcade Fatal Battle.mp3',
+	'Glad You Came.mp3',
+	'Decisive Battle.mp3',
+	'I Like Hotto Dogu.mp3',
+	'Don_t Wanna Miss A Thing.mp3',
+	'Fly Me to the Moon-[AudioTrimmer.com].mp3'
+	'Naruto OST - Strong and Strike.mp3',
+	'Passionate Duelist.mp3',
+	'Legs.mp3',
+];*/
 
 // Represents the song index
 var index;
@@ -196,7 +236,6 @@ function draw() {
     
 	fillValue = average(backgrounds);
 	
-	
 	background(fillValue / 4, fillValue / 4, fillValue / 4);
 	fillValue = average(lowgrounds);
 	
@@ -211,20 +250,19 @@ function draw() {
 	ellipse(0.25 * width, 0.5 * height, fillValue * 2);
 	ellipse(0.75 * width, 0.5 * height, fillValue * 2);
 	
-	//fillValue = average(foregrounds);
-	//console.log(fillValue);
+	fillValue = average(foregrounds);
 	
-	fill(fillValue * 2, fillValue * 2, fillValue * 2);
+	fill(fillValue * 8, fillValue * 8, fillValue * 8);
 	
-	ellipse(width / 2, height / 2, fillValue);
+	ellipse(width / 2, height / 2, fillValue * 4);
 	
-	ellipse(0.5 * width - 0.25 * width, 0.25 * height, fillValue);
-	ellipse(0.5 * width, 0.25 * height, fillValue);
-	ellipse(0.5 * width + 0.25 * width, 0.25 * height, fillValue);
+	ellipse(0.5 * width - 0.25 * width, 0.25 * height, fillValue * 4);
+	ellipse(0.5 * width, 0.25 * height, fillValue * 4);
+	ellipse(0.5 * width + 0.25 * width, 0.25 * height, fillValue * 4);
 	
-	ellipse(0.5 * width - 0.25 * width, 0.75 * height, fillValue);
-	ellipse(0.5 * width, 0.75 * height, fillValue);
-	ellipse(0.5 * width + 0.25 * width, 0.75 * height, fillValue);
+	ellipse(0.5 * width - 0.25 * width, 0.75 * height, fillValue * 4);
+	ellipse(0.5 * width, 0.75 * height, fillValue * 4);
+	ellipse(0.5 * width + 0.25 * width, 0.75 * height, fillValue * 4);
 	
 	// stroke(255);
 	// noFill();
@@ -244,4 +282,4 @@ function average(values) {
 	}
 	
 	return sum / values.length;
-}
+}	
