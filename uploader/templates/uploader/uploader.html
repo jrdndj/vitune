@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Vitune</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'uploader/css/uploader.css' %}"/>
+</head>
+<body>
+<div class="centered">
+    <p>Upload your music and its lyrics, if available.</p>
+    <form action="{% url 'analyzer' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="form-type" value="upload">
+        <div class="middled">
+            <label class="label" for="upload-button">
+                <img src="{% static 'uploader/assets/upload_icon.png' %}" width="128px" height="128px"/>
+            </label>
+            <input id="upload-button" class="invisible" type="file" name="music" accept="audio/x-wav"
+                   required="required"/>
+            <label class="label" for="lyrics-button">
+                <img src="{% static 'uploader/assets/lyrics-icon.png' %}" width="128px" height="128px"/>
+            </label>
+            <br/>
+{#            <input id="lyrics-button" class="invisible" type="file" name="lyrics" accept=".lyrics"#}
+            <input id="lyrics-button" class="invisible" type="file" name="json" accept="application/json"
+                   value="Upload subtitles"/>
+            <br/>
+            <input class="button" type="submit" value="PLAY"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>

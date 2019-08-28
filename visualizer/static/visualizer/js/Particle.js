@@ -3,7 +3,7 @@ class Particle {
 	constructor(position, hue) {
 		this.color = hue;
 		this.acceleration = createVector(0, 0.1);
-		this.velocity = createVector(random(-15, 15), random(-15, 15));
+		this.velocity = createVector(random(-20, 20), random(-20, 20));
 		this.position = position.copy();
 		this.lifespan = 255;
 	}

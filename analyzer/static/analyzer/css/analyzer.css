@@ -1,0 +1,22 @@
+* {
+    margin: 15px;
+    background-color: black;
+    color: white;
+    font-family: 'Segoe UI', serif;
+}
+
+p {
+    text-align: center;
+    font-size: 30px;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.middled {
+    text-align: center;
+}
