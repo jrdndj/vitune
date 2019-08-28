@@ -55,7 +55,7 @@ def preprocess(music_filename, lyrics_filename):
     # Lowest frequency the human ear can hear
     MINIMUM_FREQUENCY = 20
 
-    # Approxumate highest frequency the human hear can hear supported by Librosa
+    # Approxumate highest frequency the human ear can hear supported by Librosa
     MAXIMUM_FREQUENCY = 10000
 
     # Backgrounds: 20 - 250 Hz (contains fundamentals of most instruments)
@@ -73,7 +73,7 @@ def preprocess(music_filename, lyrics_filename):
     HIGHGROUNDS_MINIMUM = LOWGROUNDS_MAXIMUM + 1
     HIGHGROUNDS_MAXIMUM = 6000
 
-    # Foregrounds: 6001 - 14000 Hz (contains high percussive instruments)
+    # Foregrounds: 6001 - 10000 Hz (contains high percussive instruments)
     # (Brilliance)
     FOREGROUNDS_MINIMUM = HIGHGROUNDS_MAXIMUM + 1
     FOREGROUNDS_MAXIMUM = MAXIMUM_FREQUENCY

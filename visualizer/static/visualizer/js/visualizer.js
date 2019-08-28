@@ -56,7 +56,7 @@ let highgroundsHSBA = Array(CHROMAS).fill([0, 0]);
 let foregroundsHSBA = Array(CHROMAS).fill([0, 0]);
 
 // Keep track of the history of the foreground
-let foregroundsHistory = Array(100).fill(0);
+let foregroundsHistory = Array(Math.floor(44100 / 1000)).fill(0);
 
 // The particle systems
 let upperLeftParticleSystem;
@@ -82,6 +82,9 @@ let lyricsList = [];
 // Represents the current lyric shown
 let isLyricChanged = false;
 let lyricsIndex = 0;
+
+// Timer variables
+let timeStart;
 
 // Run these commands before anything else
 function setup() {
@@ -338,17 +341,57 @@ function draw() {
         // algorithm
         spectrum = fft.analyze();
 
+        // WAVEFORM
+        let waveform = fft.waveform();
+
+        beginShape();
+        noFill();
+
+        stroke(0, 0, 255, 50);
+        strokeWeight(1);
+
+        for (let i = 0; i < waveform.length; i++) {
+            let x = map(i, 0, waveform.length, 0, size.width);
+            let y = map(waveform[i], -1, 1, 0, size.height);
+
+            vertex(x, y);
+        }
+
+        endShape();
+        noStroke();
+
         // BACKGROUNDS
         // Get the next energy value for this location
         energy = fft.getEnergy(BACKGROUNDS_MINIMUM, BACKGROUNDS_MAXIMUM);
+
+        scalingFactor = 0.5;
+        background(0, 0, energy * scalingFactor, energy * scalingFactor, energy * scalingFactor);
 
         scalingFactor = 2;
 
         // Create a rectangle for each chroma
         for (let index = 0; index < CHROMAS; index++) {
-            fill(backgroundsHSBA[index][0], backgroundsHSBA[index][1], backgroundsHSBA[index][1] / 2, backgroundsHSBA[index][1]);
+            fill(backgroundsHSBA[index][0], backgroundsHSBA[index][1], backgroundsHSBA[index][1] / scalingFactor, backgroundsHSBA[index][1]);
+            // c1 = color(backgroundsHSBA[index][0], backgroundsHSBA[index][1], backgroundsHSBA[index][1] / scalingFactor, backgroundsHSBA[index][1]);
+            // c2 = color(0, 0, 0, 0);
 
-            rect((size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)), 0, (energy / 255 * scalingFactor) * (size.width / 12), size.height);
+            let rectWidth = (energy / 255 * scalingFactor) * (size.width / 12);
+
+            rect(
+                (size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)),
+                0,
+                rectWidth,
+                size.height,
+                rectWidth / 2 - (energy / 255) * (rectWidth / 2)
+            );
+            // rectGradient(
+            //     (size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)),
+            //     0,
+            //     (energy / 255 * scalingFactor) * (size.width / 12),
+            //     size.height,
+            //     c2,
+            //     c1
+            // );
         }
 
         // LOWGROUNDS
@@ -360,9 +403,27 @@ function draw() {
 
         // Create a rectangle for each chroma
         for (let index = 0; index < CHROMAS; index++) {
-            fill(lowgroundsHSBA[index][0], lowgroundsHSBA[index][1], lowgroundsHSBA[index][1] / 1.5, lowgroundsHSBA[index][1]);
+            fill(lowgroundsHSBA[index][0], lowgroundsHSBA[index][1], lowgroundsHSBA[index][1] / scalingFactor, lowgroundsHSBA[index][1]);
+            // c1 = color(lowgroundsHSBA[index][0], lowgroundsHSBA[index][1], lowgroundsHSBA[index][1] / scalingFactor, lowgroundsHSBA[index][1]);
+            // c2 = color(0, 0, 0, 0);
 
-            rect((size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)), size.height * 0.2, (energy / 255 * scalingFactor) * (size.width / 12), size.height - size.height * 0.4);
+            let rectWidth = (energy / 255 * scalingFactor) * (size.width / 12);
+
+            rect(
+                (size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)),
+                size.height * 0.2,
+                rectWidth,
+                size.height - size.height * 0.4,
+                rectWidth / 2 - (energy / 255) * (rectWidth / 2)
+            );
+            // rectGradient(
+            //     (size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)),
+            //     size.height * 0.2,
+            //     (energy / 255 * scalingFactor) * (size.width / 12),
+            //     size.height - size.height * 0.4,
+            //     c2,
+            //     c1
+            // );
         }
 
 
@@ -371,13 +432,31 @@ function draw() {
         energy = fft.getEnergy(HIGHGROUNDS_MINIMUM, HIGHGROUNDS_MAXIMUM);
 
         // Apply the colors and shapes
-        scalingFactor = 1;
+        scalingFactor = 1.25;
 
         // Create a rectangle for each chroma
         for (let index = 0; index < CHROMAS; index++) {
-            fill(highgroundsHSBA[index][0], highgroundsHSBA[index][1], highgroundsHSBA[index][1] / 1.25, highgroundsHSBA[index][1]);
+            fill(highgroundsHSBA[index][0], highgroundsHSBA[index][1], highgroundsHSBA[index][1] / scalingFactor, highgroundsHSBA[index][1]);
+            // c1 = color(highgroundsHSBA[index][0], highgroundsHSBA[index][1], highgroundsHSBA[index][1] / scalingFactor, highgroundsHSBA[index][1]);
+            // c2 = color(0, 0, 0, 0);
 
-            rect((size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)), size.height * 0.4, (energy / 255 * scalingFactor) * (size.width / 12), size.height - size.height * 0.8);
+            let rectWidth = (energy / 255 * scalingFactor) * (size.width / 12);
+
+            rect(
+                (size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)),
+                size.height * 0.4,
+                rectWidth,
+                size.height - size.height * 0.8,
+                rectWidth / 2 - (energy / 255) * (rectWidth / 2)
+            );
+            // rectGradient(
+            //     (size.width / 12 * index + size.width / 12 * 0.5) - ((energy / 255 * scalingFactor) * (size.width / 12 * 0.5)),
+            //     size.height * 0.4,
+            //     (energy / 255 * scalingFactor) * (size.width / 12),
+            //     size.height - size.height * 0.8,
+            //     c2,
+            //     c1
+            // );
         }
 
 
@@ -400,11 +479,7 @@ function draw() {
             upperLeftParticleSystem.addParticle(0);
             upperLeftParticleSystem.addParticle(0);
             upperLeftParticleSystem.addParticle(0);
-            upperLeftParticleSystem.addParticle(0);
-            upperLeftParticleSystem.addParticle(0);
 
-            upperRightParticleSystem.addParticle(0);
-            upperRightParticleSystem.addParticle(0);
             upperRightParticleSystem.addParticle(0);
             upperRightParticleSystem.addParticle(0);
             upperRightParticleSystem.addParticle(0);
@@ -412,11 +487,7 @@ function draw() {
             lowerLeftParticleSystem.addParticle(0);
             lowerLeftParticleSystem.addParticle(0);
             lowerLeftParticleSystem.addParticle(0);
-            lowerLeftParticleSystem.addParticle(0);
-            lowerLeftParticleSystem.addParticle(0);
 
-            lowerRightParticleSystem.addParticle(0);
-            lowerRightParticleSystem.addParticle(0);
             lowerRightParticleSystem.addParticle(0);
             lowerRightParticleSystem.addParticle(0);
             lowerRightParticleSystem.addParticle(0);
@@ -433,10 +504,19 @@ function draw() {
         foregroundsHistory.push(energy);
 
         // Display the white text song title
+        // Display the counter
+        let timeCurrent = new Date().getTime() - timeStart;
+        let timeInSecondsText = timeCurrent / 1000;
+
+        scalingFactor = 100;
+
         fill(0, 0, 255);
         textSize(30);
         textAlign(CENTER);
         text(music_data['name'], width / 2, 50);
+        text(timeInSecondsText.toFixed(3), width / 2, 80);
+
+        textSize(30 + 5 * (energy / 255));
 
         // Display lyrics, if any
         if (lyricsIndex !== 0 || isLyricChanged !== false) {
@@ -450,6 +530,8 @@ function draw() {
 
             isLyricChanged = false;
         }
+    } else {
+        timeStart = new Date().getTime();
     }
 }
 
@@ -476,6 +558,27 @@ function star(x, y, radius1, radius2, npoints) {
 
     endShape(CLOSE);
 }
+
+// Draw a rectangular gradient
+// function rectGradient(x, y, w, h, c1, c2) {
+//     noFill();
+//     strokeWeight(2);
+//
+//     // Left to right gradient
+//     for (let index = x; index <= x + Math.floor(w / 2); index++) {
+//         let inter = map(index, x, x + Math.floor(w / 2), 0, 1);
+//         let c = lerpColor(c1, c2, inter);
+//         stroke(c);
+//         line(index, y, index, y + h);
+//     }
+//
+//     for (let index = x + Math.floor(w / 2) + 1; index <= x + w; index++) {
+//         let inter = map(index, x + Math.floor(w / 2), x + w, 0, 1);
+//         let c = lerpColor(c2, c1, inter);
+//         stroke(c);
+//         line(index, y, index, y + h);
+//     }
+// }
 
 // Get the mean value of an array
 function mean(arr) {
