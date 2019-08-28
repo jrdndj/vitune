@@ -1,0 +1,12 @@
+* {
+    background-color: black;
+    color: white;
+    font-family: 'Segoe UI', serif;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

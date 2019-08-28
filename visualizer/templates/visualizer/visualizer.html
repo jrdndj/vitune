@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vitune</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'visualizer/css/visualizer.css' %}"/>
+    <script src="{% static 'visualizer/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'visualizer/js/p5/p5.min.js' %}"></script>
+    <script src="{% static 'visualizer/js/p5/addons/p5.dom.min.js' %}"></script>
+    <script src="{% static 'visualizer/js/p5/addons/p5.sound.min.js' %}"></script>
+    <script src="{% static 'visualizer/js/ParticleSystem.js' %}"></script>
+    <script src="{% static 'visualizer/js/Particle.js' %}"></script>
+    <script>
+        let uploader_url = '{% url 'uploader' %}';
+    </script>
+    <script src="{% static 'visualizer/js/visualizer.js' %}"></script>
+</head>
+<body>
+</body>
+</html>

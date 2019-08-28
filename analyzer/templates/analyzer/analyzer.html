@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Vitune</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'analyzer/css/analyzer.css' %}"/>
+    <script src="{% static 'analyzer/js/jquery-3.4.1.min.js' %}"></script>
+    <script>
+        {% if csrf_token %}
+            let csrf_token = '{{ csrf_token }}';
+            let name = '{{ name }}';
+            let preprocessing_url = '{% url 'analyzer' %}';
+            let music_url = '{% url 'fileserver' name %}';
+            let visualizer_url = '{% url 'visualizer' %}';
+            {% if lyrics %}
+                let lyrics = '{{ lyrics }}';
+                let lyrics_url = '{% url 'fileserver' lyrics %}';
+            {% elif json %}
+                let json = '{{ json }}';
+                let json_url = '{% url 'fileserver' json %}';
+            {% endif %}
+        {% endif %}
+    </script>
+    <script src="{% static 'analyzer/js/initiate_preprocess.js' %}" type="text/javascript"></script>
+</head>
+<body>
+<div class="centered">
+    <p>Analyzing music...</p>
+    <img src="{% static 'analyzer/assets/ripple.gif' %}" width="256px" height="256px"/>
+</div>
+</body>
+</html>
