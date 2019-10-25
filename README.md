@@ -10,5 +10,5 @@ Below are some of the links relevant to the project (when we were still working 
 **Team drive** (invitation link)
 - https://drive.google.com/drive/folders/1RD6U1qQnnvc2fYzMcFBCsKfEwcKEjSpe
 
-**Overleaf**
-- (TBA)
+**Overleaf link to the manuscript**
+- https://www.overleaf.com/8335766724zxbzcfrcmprh
