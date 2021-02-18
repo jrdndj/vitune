@@ -1,6 +1,9 @@
 # Vitune
 The prototype of a music visualizer designed for the Deaf and Hard of Hearing (DHH).
 
+Link of our published paper: 
+https://dl.acm.org/doi/abs/10.1145/3334480.3383046 
+
 Below are some of the links relevant to the project (when we were still working on it for our undergrad).
 
 **Trello** (invitation links)
